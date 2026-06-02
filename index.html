@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>index.html</title>
+
+<style>
+body { font-family: Arial; text-align:center; }
+
+.calculator {
+  width:260px;
+  margin:20px auto;
+  background:#222;
+  padding:10px;
+  border-radius:10px;
+}
+
+#display {
+  width:100%;
+  height:40px;
+  font-size:20px;
+  text-align:right;
+}
+
+button {
+  width:55px;
+  height:55px;
+  margin:3px;
+}
+
+#menu {
+  display:none;
+  margin-top:20px;
+}
+
+iframe {
+  width:900px;
+  height:600px;
+  border:2px solid black;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Calculator</h1>
+
+<div class="calculator">
+<input id="display" disabled><br>
+
+<button onclick="press('7')">7</button>
+<button onclick="press('8')">8</button>
+<button onclick="press('9')">9</button>
+<button onclick="press('+')">+</button><br>
+
+<button onclick="press('4')">4</button>
+<button onclick="press('5')">5</button>
+<button onclick="press('6')">6</button>
+<button onclick="press('-')">-</button><br>
+
+<button onclick="press('1')">1</button>
+<button onclick="press('2')">2</button>
+<button onclick="press('3')">3</button>
+<button onclick="press('*')">*</button><br>
+
+<button onclick="press('0')">0</button>
+<button onclick="clearD()">C</button>
+<button onclick="enter()">=</button>
+<button onclick="press('/')">/</button>
+</div>
+
+<div id="menu">
+<h2>🎮 Game Hub</h2>
+
+<button onclick="loadGame('slicer')">Slicer Duo</button>
+<button onclick="loadGame('lava')">Brainrots Lava Survive</button>
+<button onclick="loadGame('zindex')">Zindex</button>
+
+<br><br>
+
+<button onclick="goFullscreen()">🖥️ Fullscreen</button>
+
+<div id="gameBox"></div>
+</div>
+
+<script>
+let display=document.getElementById("display");
+
+function press(v){ display.value+=v; }
+function clearD(){ display.value=""; }
+
+// UNLOCK
+function enter(){
+  if(display.value==="1337"){
+    document.getElementById("menu").style.display="block";
+  } else {
+    try{ display.value=eval(display.value); }
+    catch{ display.value="Error"; }
+  }
+}
+
+// LOAD GAMES (OnlineGames.io embeds)
+function loadGame(game){
+  let box=document.getElementById("gameBox");
+
+  if(game==="slicer"){
+    box.innerHTML=`
+      <iframe id="gameFrame"
+      src="https://www.onlinegames.io/slicer-duo/"></iframe>
+    `;
+  }
+
+  if(game==="lava"){
+    box.innerHTML=`
+      <iframe id="gameFrame"
+      src="https://www.onlinegames.io/brainrots-lava-survive-online/"></iframe>
+    `;
+  }
+
+  if(game==="zindex"){
+    box.innerHTML=`
+      <iframe id="gameFrame"
+      src="https://www.onlinegames.io/zindex/"></iframe>
+    `;
+  }
+}
+
+// FULLSCREEN FUNCTION
+function goFullscreen(){
+  let frame=document.getElementById("gameFrame");
+
+  if(!frame){
+    alert("Load a game first!");
+    return;
+  }
+
+  if(frame.requestFullscreen){
+    frame.requestFullscreen();
+  } else if(frame.webkitRequestFullscreen){
+    frame.webkitRequestFullscreen();
+  } else if(frame.msRequestFullscreen){
+    frame.msRequestFullscreen();
+  }
+}
+</script>
+
+</body>
+</html>
