@@ -2,41 +2,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>index.html</title>
+<title>Calculator</title>
 
 <style>
-body { font-family: Arial; text-align:center; }
+body {
+  font-family: Arial;
+  text-align: center;
+}
 
 .calculator {
-  width:260px;
-  margin:20px auto;
-  background:#222;
-  padding:10px;
-  border-radius:10px;
+  width: 260px;
+  margin: 20px auto;
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 #display {
-  width:100%;
-  height:40px;
-  font-size:20px;
-  text-align:right;
+  width: 95%;
+  height: 40px;
+  font-size: 20px;
+  text-align: right;
 }
 
 button {
-  width:55px;
-  height:55px;
-  margin:3px;
+  width: 55px;
+  height: 55px;
+  margin: 3px;
 }
 
 #menu {
-  display:none;
-  margin-top:20px;
+  display: none;
+  margin-top: 20px;
 }
 
 iframe {
-  width:900px;
-  height:600px;
-  border:2px solid black;
+  width: 900px;
+  height: 600px;
+  border: 2px solid black;
 }
 </style>
 </head>
@@ -46,60 +49,90 @@ iframe {
 <h1>Calculator</h1>
 
 <div class="calculator">
-<input id="display" disabled><br>
+  <input id="display" disabled><br>
 
-<button onclick="press('7')">7</button>
-<button onclick="press('8')">8</button>
-<button onclick="press('9')">9</button>
-<button onclick="press('+')">+</button><br>
+  <button onclick="press('7')">7</button>
+  <button onclick="press('8')">8</button>
+  <button onclick="press('9')">9</button>
+  <button onclick="press('+')">+</button><br>
 
-<button onclick="press('4')">4</button>
-<button onclick="press('5')">5</button>
-<button onclick="press('6')">6</button>
-<button onclick="press('-')">-</button><br>
+  <button onclick="press('4')">4</button>
+  <button onclick="press('5')">5</button>
+  <button onclick="press('6')">6</button>
+  <button onclick="press('-')">-</button><br>
 
-<button onclick="press('1')">1</button>
-<button onclick="press('2')">2</button>
-<button onclick="press('3')">3</button>
-<button onclick="press('*')">*</button><br>
+  <button onclick="press('1')">1</button>
+  <button onclick="press('2')">2</button>
+  <button onclick="press('3')">3</button>
+  <button onclick="press('*')">*</button><br>
 
-<button onclick="press('0')">0</button>
-<button onclick="clearD()">C</button>
-<button onclick="enter()">=</button>
-<button onclick="press('/')">/</button>
+  <button onclick="press('0')">0</button>
+  <button onclick="clearD()">C</button>
+  <button onclick="enter()">=</button>
+  <button onclick="press('/')">/</button>
 </div>
 
 <div id="menu">
-<h2>🎮 Game Hub</h2>
+  <h2>🎮 Game Hub</h2>
 
-<button onclick="loadGame('slicer')">Slicer Duo</button>
-<button onclick="loadGame('lava')">Brainrots Lava Survive</button>
-<button onclick="loadGame('zindex')">Zindex</button>
+  <button onclick="hideHub()">Hide</button>
 
-<br><br>
+  <br><br>
 
-<button onclick="goFullscreen()">🖥️ Fullscreen</button>
+  <button onclick="loadGame('slicer')">Slicer Duo</button>
+  <button onclick="loadGame('lava')">Brainrots Lava Survive</button>
+  <button onclick="loadGame('zindex')">Zindex</button>
+<button onclick="loadGame('idev')">iDev Games</button>
 
-<div id="gameBox"></div>
+  <br><br>
+
+  <button onclick="goFullscreen()">Fullscreen</button>
+
+  <div id="gameBox"></div>
 </div>
 
 <script>
-let display=document.getElementById("display");
+let display = document.getElementById("display");
 
-function press(v){ display.value+=v; }
-function clearD(){ display.value=""; }
+function press(v) {
+  display.value += v;
+}
 
-// UNLOCK
-function enter(){
-  if(display.value==="1337"){
-    document.getElementById("menu").style.display="block";
-  } else {
-    try{ display.value=eval(display.value); }
-    catch{ display.value="Error"; }
+function clearD() {
+  display.value = "";
+}
+
+function showHub() {
+  document.getElementById("menu").style.display = "block";
+}
+
+function hideHub() {
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("gameBox").innerHTML = "";
+}
+
+// 1337 opens Game Hub
+// 7331 hides Game Hub
+function enter() {
+  if (display.value === "1337") {
+    showHub();
+    display.value = "";
+    return;
+  }
+
+  if (display.value === "7331") {
+    hideHub();
+    display.value = "";
+    return;
+  }
+
+  try {
+    display.value = eval(display.value);
+  } catch {
+    display.value = "Error";
   }
 }
 
-// LOAD GAMES (OnlineGames.io embeds)
 function loadGame(game){
   let box=document.getElementById("gameBox");
 
@@ -123,22 +156,28 @@ function loadGame(game){
       src="https://www.onlinegames.io/zindex/"></iframe>
     `;
   }
+
+  if(game==="idev"){
+    box.innerHTML=`
+      <iframe id="gameFrame"
+      src="https://idev.games/"
+      allowfullscreen></iframe>
+    `;
+  }
 }
+function goFullscreen() {
+  let frame = document.getElementById("gameFrame");
 
-// FULLSCREEN FUNCTION
-function goFullscreen(){
-  let frame=document.getElementById("gameFrame");
-
-  if(!frame){
+  if (!frame) {
     alert("Load a game first!");
     return;
   }
 
-  if(frame.requestFullscreen){
+  if (frame.requestFullscreen) {
     frame.requestFullscreen();
-  } else if(frame.webkitRequestFullscreen){
+  } else if (frame.webkitRequestFullscreen) {
     frame.webkitRequestFullscreen();
-  } else if(frame.msRequestFullscreen){
+  } else if (frame.msRequestFullscreen) {
     frame.msRequestFullscreen();
   }
 }
