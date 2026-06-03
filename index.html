@@ -79,11 +79,12 @@ iframe {
 
   <br><br>
 
- <button onclick="loadGame('slicer')">Slicer Duo</button>
-<button onclick="loadGame('lava')">Brainrots Lava Survive</button>
-<button onclick="loadGame('zindex')">Zindex</button>
-<button onclick="loadGame('idev')">iDev Games</button>
-  
+  <button onclick="loadGame('slicer')">Slicer Duo</button>
+  <button onclick="loadGame('lava')">Brainrots Lava Survive</button>
+  <button onclick="loadGame('zindex')">Zindex</button>
+  <button onclick="loadGame('idev')">iDev Games</button>
+  <button onclick="loadGame('gamesnacks')">GameSnacks</button>
+
   <br><br>
 
   <button onclick="goFullscreen()">Fullscreen</button>
@@ -134,37 +135,49 @@ function enter() {
 }
 
 function loadGame(game){
-  let box=document.getElementById("gameBox");
+  let box = document.getElementById("gameBox");
 
-  if(game==="slicer"){
-    box.innerHTML=`
+  if(game === "slicer"){
+    box.innerHTML = `
       <iframe id="gameFrame"
-      src="https://www.onlinegames.io/slicer-duo/"></iframe>
+      src="https://www.onlinegames.io/slicer-duo/"
+      allowfullscreen></iframe>
     `;
   }
 
-  if(game==="lava"){
-    box.innerHTML=`
+  if(game === "lava"){
+    box.innerHTML = `
       <iframe id="gameFrame"
-      src="https://www.onlinegames.io/brainrots-lava-survive-online/"></iframe>
+      src="https://www.onlinegames.io/brainrots-lava-survive-online/"
+      allowfullscreen></iframe>
     `;
   }
 
-  if(game==="zindex"){
-    box.innerHTML=`
+  if(game === "zindex"){
+    box.innerHTML = `
       <iframe id="gameFrame"
-      src="https://www.onlinegames.io/zindex/"></iframe>
+      src="https://www.onlinegames.io/zindex/"
+      allowfullscreen></iframe>
     `;
   }
 
-  if(game==="idev"){
-    box.innerHTML=`
+  if(game === "idev"){
+    box.innerHTML = `
       <iframe id="gameFrame"
       src="https://idev.games/"
       allowfullscreen></iframe>
     `;
   }
+
+  if(game === "gamesnacks"){
+    box.innerHTML = `
+      <iframe id="gameFrame"
+      src="https://gamesnacks.com/"
+      allowfullscreen></iframe>
+    `;
+  }
 }
+
 function goFullscreen() {
   let frame = document.getElementById("gameFrame");
 
